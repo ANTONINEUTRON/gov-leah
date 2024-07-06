@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const LandingPage = () => {
@@ -21,7 +22,9 @@ const LandingPage = () => {
           <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4">Welcome to Govleah</h2>
             <p className="text-xl mb-6">Your platform for providing feedback on government policies and initiatives.</p>
-            <button className="bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700">Get Started</button>
+            <Link href="/login">
+              <button className="bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700">Get Started</button>
+            </Link>
           </div>
         </section>
 
