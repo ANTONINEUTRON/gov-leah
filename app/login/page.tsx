@@ -19,6 +19,7 @@ import Logo from "@/components/logo";
 // import isEmail from 'validator/es/lib/isEmail';
 import LoadingUI from "@/components/LoadingUI";
 import { cAuth } from "@/firebaseconfig";
+import { APP_NAME } from "@/util/AppConstants";
 
 export default function Login(){
     // const isLoading = useAppSelector((state: {auth: AuthState}) => state.auth.loading,shallowEqual);
@@ -58,10 +59,10 @@ export default function Login(){
     
 
 
-    return !isInitializationComplete 
-        ? (<LoadingUI />)
-        :(
-        <div>
+    //  !isInitializationComplete 
+    //     ? (<LoadingUI />)
+        // :(
+       return (<div>
             <div className="flex justify-between">
                 {/* Left Side (60% width) */}
                 <div className="w-full">
@@ -72,7 +73,7 @@ export default function Login(){
                         {/* Content for the left side */}
                         <div className="flex flex-col w-4/5 lg:w-3/6 items-center justify-between px-2 md:px-6">
                             <div className="flex mb-9 mt-4">
-                                <CustomHeaderText text="Sign in to Coachfluens"/>
+                                <CustomHeaderText text={"Sign in to "+APP_NAME}/>
                             </div>
                             <SocialSignin/>
                             <div className='m-5'>or use your email account</div>
@@ -91,12 +92,14 @@ export default function Login(){
                                 Forgot password?
                             </CustomChip>
 
+                           <Link href="/home">
                             <CustomButton 
                                 // isLoading={isLoading}
                                 // onButtonClick={signInUser}
                                 >
                                 Sign in
                             </CustomButton>
+                            </Link>
                         </div>
         
                     </div>

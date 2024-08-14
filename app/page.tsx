@@ -1,3 +1,4 @@
+import { APP_NAME } from '@/util/AppConstants';
 import Link from 'next/link';
 import React from 'react';
 
@@ -6,7 +7,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="bg-blue-600 text-white py-4">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Govleah</h1>
+          <h1 className="text-3xl font-bold">{APP_NAME}</h1>
           <nav>
             <ul className="flex space-x-4">
               <li><a href="#features" className="hover:underline">Features</a></li>
@@ -20,7 +21,7 @@ const LandingPage = () => {
       <main className="flex-grow">
         <section className="bg-blue-100 py-20">
           <div className="container mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-4">Welcome to Govleah</h2>
+            <h2 className="text-4xl font-bold mb-4">Welcome to {APP_NAME}</h2>
             <p className="text-xl mb-6">Your platform for providing feedback on government policies and initiatives.</p>
             <Link href="/login">
               <button className="bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700">Get Started</button>
@@ -79,7 +80,7 @@ const LandingPage = () => {
 
       <footer className="bg-blue-600 text-white py-4">
         <div className="container mx-auto text-center">
-          <p>&copy; 2024 Govleah. All rights reserved.</p>
+          <p>&copy; 2024 {APP_NAME}. All rights reserved.</p>
         </div>
       </footer>
     </div>

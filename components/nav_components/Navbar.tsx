@@ -17,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({className})=>{
     return (
         <div className={className || ''}>
             <Menu className={`w-10 h-12 lg:hidden ${isOpen ? 'hidden' : 'block'}`} onClick={()=>{setIsOpen(!isOpen)}}/>
-            <nav className="hidden lg:flex fixed h-screen flex-col bg-gray-100 shadow-md dark:bg-gray-800 dark:text-white pr-4 py-2">
+            <nav className="hidden lg:flex h-screen flex-col bg-gray-100 shadow-md pr-4 py-2">
                 <div className="flex justify-between">
                     <div className="flex items-center px-2 my-1 mb-8">
                         <Logo/>
@@ -60,15 +60,15 @@ const NavbarContents = ()=>{
             <ul className="font-medium flex flex-col space-y-2">
                 <NavItem 
                     icon={<Home />}
-                    title="Home"
+                    title="Policies"
                     path="/home"
                     highlightCondition={(cPath.includes("home") || cPath == "/")}/>
                 <NavItem 
-                    title="Services"
+                    title="Feedbacks"
                     icon={<Briefcase />}
-                    path="/services"
-                    highlightCondition={cPath.includes("services")}/>
-                <NavItem 
+                    path="/feedbacks"
+                    highlightCondition={cPath.includes("feedbacks")}/>
+                {/* <NavItem 
                     title="Chats"
                     icon={<MessageSquare />}
                     path="/chat"
@@ -82,7 +82,7 @@ const NavbarContents = ()=>{
                     title="Notifications"
                     icon={<Bell />}
                     path="/notifications"
-                    highlightCondition={cPath.includes("notifications")}/>
+                    highlightCondition={cPath.includes("notifications")}/> */}
                 <NavItem 
                     title="Profile"
                     icon={<User />}

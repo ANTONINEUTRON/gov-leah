@@ -3,21 +3,22 @@ import { GoogleAuthProvider, UserCredential, signInWithPopup } from 'firebase/au
 import Image from 'next/image';
 import CustomRoundButton from './CustomRoundButton';
 import { useDispatch } from 'react-redux';
-import { cSignInWithGoogle } from '@/data/redux/actions/authActions';
-import { AppDispatch } from '@/data/redux/store';
+// import { cSignInWithGoogle } from '@/data/redux/actions/authActions';
+// import { AppDispatch } from '@/data/redux/store';
 
 const SocialSignin = () => {
-  const dispatch = useDispatch<AppDispatch>()
+  // const dispatch = useDispatch<AppDispatch>()
 
-  const signInWithGoogle = async () => {
-    dispatch(cSignInWithGoogle())
-  };
+  // const signInWithGoogle = async () => {
+  //   dispatch(cSignInWithGoogle())
+  // };
 
   return (
     <div>
       <Space size="middle">
         <CustomRoundButton
-          onClick={signInWithGoogle}>
+          onClick={()=>{}}//signInWithGoogle}
+          >
           <Image 
             src="/images/google.png" 
             alt='Google Signin Icon'
@@ -27,7 +28,8 @@ const SocialSignin = () => {
             />
         </CustomRoundButton>
         <CustomRoundButton
-          onClick={signInWithGoogle}>
+          onClick={() => { }}//{signInWithGoogle}
+          >
           <Image 
             src="/images/facebook.png" 
             alt='Facebook Signin Icon'

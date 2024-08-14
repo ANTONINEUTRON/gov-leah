@@ -62,10 +62,10 @@ export default function Register(){
     //     return null
     // }
 
-    return !isInitializationComplete 
-        ? (<LoadingUI />)
-        :(
-        <div>
+    //  !isInitializationComplete 
+    //     ? (<LoadingUI />)
+    //     :(
+        return (<div>
             <div className="flex justify-between">
                 {/* Left Side (60% width) */}
                 <div className="w-full">
