@@ -4,26 +4,30 @@ import CustomDPHeader from "@/components/CustomDPHeader";
 import CustomRoundButton from "@/components/CustomRoundButton";
 import FloatingActionButton from "@/components/FloatingActionButton";
 import Navbar from "@/components/nav_components/Navbar";
+import { cAuth } from "@/firebaseconfig";
 // import { useAppDispatch } from "@/data/redux/hooks";
 // import { signOut } from "@/data/redux/slice/authSlice";
 // import { AppDispatch } from "@/data/redux/store";
-import { Avatar, Divider, Space } from "antd";
+import { Divider, Space } from "antd";
+import { User } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Briefcase, Edit2, Edit3, Heart, LogOut, Mail, Phone, Star, User } from "react-feather";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { Briefcase, Edit3, LogOut, Mail, Phone, Star } from "react-feather";
 
 
 export default function Profile(){
-    // const dispatch = useAppDispatch()
-    // const router = useRouter()
+    const [user,setUser] = useState<User | null>(null);
 
-    // const handleLogout = ()=>{
-    //     dispatch(signOut())
-    //     router.push("/login")
-    // }
-
+    useEffect(()=>{
+        let currentUser = cAuth.currentUser;
+        console.log("heele");
+        
+        console.log(currentUser);
+        
+        setUser(currentUser);
+    },[])
+    
     return (
         <main className="flex h-full">
             <div>
@@ -41,7 +45,9 @@ export default function Profile(){
                     </Link>
                 </div>
                 <div className="flex flex-col pl-3 w-full pr-12">
-                    <span className="text-xl font-semibold py-2">Name Of User</span>
+                    <span className="text-xl font-semibold py-2">
+                        {user?.displayName ?? "Hello"}
+                    </span>
                     <span>Mentor Current Role</span>
                     <div className="text-gray-600 mt-4 dark:text-gray-400 flex">
                         <Briefcase />

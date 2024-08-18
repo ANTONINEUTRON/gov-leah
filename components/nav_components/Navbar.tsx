@@ -1,11 +1,12 @@
 "use client"
-import { Bell, Briefcase, Calendar, Home, Menu, MessageSquare, User, X } from "react-feather"
+import { Bell, Briefcase, Calendar, ChevronDown, ChevronUp, Home, Menu, MessageSquare, User, X } from "react-feather"
 import Logo from "../logo"
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import NavItem from "./NavItem";
-import { Drawer } from "antd";
+import { Drawer, Popover } from "antd";
+import AccountContent from "../AccountContent";
 
 interface NavbarProps{
     className?: string;
@@ -25,8 +26,8 @@ const Navbar: React.FC<NavbarProps> = ({className})=>{
                     {/* <X onClick={()=>{setIsOpen(false)}} className="lg:hidden"/> */}
                 </div>
                 <NavbarContents />
-                
             </nav>
+
             <Drawer
                 title={<Logo />}
                 placement={'left'}
@@ -83,12 +84,8 @@ const NavbarContents = ()=>{
                     icon={<Bell />}
                     path="/notifications"
                     highlightCondition={cPath.includes("notifications")}/> */}
-                <NavItem 
-                    title="Profile"
-                    icon={<User />}
-                    path="/profile"
-                    highlightCondition={cPath.includes("profile")}/>
                 
+                <ProfileItem />
                 {/* <NavItem 
                     title=""
                     icon
@@ -100,3 +97,37 @@ const NavbarContents = ()=>{
 }
 
 export default Navbar
+
+const ProfileItem = ()=>{
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <Popover
+            className="flex items-center"
+            content={<AccountContent />}
+            trigger={"click"}
+            
+            open={isOpen}
+            onOpenChange={() => setIsOpen(!isOpen)}>
+
+            <div className=" h-8 flex justify-between">
+                <NavItem
+                    title="Profile"
+                    icon={<User />}
+                    path="#" 
+                    highlightCondition={false}/>
+
+                {
+                    isOpen
+                        ? (
+                            <ChevronUp />
+                        )
+                        : (
+                            <ChevronDown />
+                        )
+                }
+            </div>
+        </Popover>
+                
+    );
+}

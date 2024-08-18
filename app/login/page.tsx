@@ -7,62 +7,38 @@ import CustomTextField from "@/components/input_components/CustomTextfield";
 import SocialSignin from "@/components/SocialSignin";
 import Link from "next/link";
 import { Mail } from "react-feather";
-import CustomChip from "@/components/CustomChip";
-import { shallowEqual, useSelector } from "react-redux";
-// import { AuthState, showError } from "@/data/redux/slice/authSlice";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
-// import { useAppDispatch, useAppSelector } from "@/data/redux/hooks";
 import Logo from "@/components/logo";
-// import { isUserAuthenticated } from "@/data/repository/AuthRepository";
-// import { cSignInWithEmailAndPassword } from "@/data/redux/actions/authActions";
-// import isEmail from 'validator/es/lib/isEmail';
-import LoadingUI from "@/components/LoadingUI";
 import { cAuth } from "@/firebaseconfig";
 import { APP_NAME } from "@/util/AppConstants";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login(){
-    // const isLoading = useAppSelector((state: {auth: AuthState}) => state.auth.loading,shallowEqual);
+    const [isLoading,setIsLoading] = useState(false)//useAppSelector((state: {auth: AuthState}) => state.auth.loading,shallowEqual);
     const router = useRouter()
-    // const dispatch = useAppDispatch()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [isInitializationComplete, setIsInitializationComplete] = useState(false)
+    const [error, setError] = useState(null)
 
+    const handleSignIn = async () => {
+        setIsLoading(true);
 
-    // useLayoutEffect(()=>{
-    //     cAuth.authStateReady().then(()=>{
-    //         if(isUserAuthenticated()){
-    //             router.push("/")
-    //         }else{
-    //             setIsInitializationComplete(true)
-    //         }
-    //     })
-    // })
+        try {
+            const userCredential = await signInWithEmailAndPassword(cAuth, email, password);
+            const user = userCredential.user;
+            console.log('User signed in:', user);
+            // Redirect or perform other actions after successful sign-in
+            router.replace("/home");
+        } catch (err: any) {
+            setError(err.message);
+            console.error('Error signing in:', err);
+        }
+        setIsLoading(false);
+    };
 
-    // const signInUser = ()=>{
-    //     //Validate Inputs
-    //     let error = validateInputs()
-    //     if(error != null){
-    //         dispatch(showError(error))
-    //     }else{
-    //         dispatch(cSignInWithEmailAndPassword({email: email, password: password}))
-    //     }
-    // }
-
-    // const validateInputs = (): string | null => {
-    //     if(!isEmail(email)){
-    //         return "Enter a valid email address"
-    //     }
-    //     return null
-    // }
-    
-
-
-    //  !isInitializationComplete 
-    //     ? (<LoadingUI />)
-        // :(
-       return (<div>
+    return (
+       <div>
             <div className="flex justify-between">
                 {/* Left Side (60% width) */}
                 <div className="w-full">
@@ -88,18 +64,17 @@ export default function Login(){
                                 className="mb-6" 
                                 onInputChange={(value)=>{setPassword(value)}}/>
                             
-                            <CustomChip className="mb-8">
+                            {/* <CustomChip className="mb-8">
                                 Forgot password?
-                            </CustomChip>
+                            </CustomChip> */}
+                            {error && <p className="py-2 text-red-600">{error}</p>}
 
-                           <Link href="/home">
                             <CustomButton 
-                                // isLoading={isLoading}
-                                // onButtonClick={signInUser}
+                                isLoading={isLoading}
+                                onButtonClick={()=>handleSignIn()}
                                 >
                                 Sign in
                             </CustomButton>
-                            </Link>
                         </div>
         
                     </div>

@@ -18,16 +18,33 @@ import { useRouter } from "next/navigation";
 // import { useAppDispatch } from "@/data/redux/hooks";
 import { cAuth } from "@/firebaseconfig";
 import LoadingUI from "@/components/LoadingUI";
+import { createUserWithEmailAndPassword, updateCurrentUser, updateProfile } from "firebase/auth";
 
 export default function Register(){
-    // const isLoading = useSelector((state: AuthState) => state.loading);
+    const [isLoading, setIsLoading] = useState(false);//useSelector((state: AuthState) => state.loading);
     const router = useRouter()
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    // const dispatch = useAppDispatch()
+    const [error, setError] = useState(null);
     const [isInitializationComplete, setIsInitializationComplete] = useState(false)
 
+
+    const handleSignUp = async () => {
+        setIsLoading(true);
+        try {
+            const userCredential = await createUserWithEmailAndPassword(cAuth, email, password);
+            const user = userCredential.user;
+            await updateProfile(user, {...user, displayName:name});
+            console.log('User created:', user);
+            router.replace("/home")
+            // You can redirect or perform other actions here after a successful sign-up
+        } catch (err:any) {
+            setError(err.message);
+            console.error('Error creating user:', error);
+        }
+        setIsLoading(false);
+    };
 
     // useEffect(()=>{
     //     cAuth.authStateReady().then(()=>{
@@ -95,13 +112,12 @@ export default function Register(){
                                 onInputChange={(value)=>setPassword(value)}
                                 value={password}
                                 />
-                            {/* <div className="shadow-md hover:border hover:border-primary flex items-center p-5 pb-1 pt-1 mb-10 bg-gray-100 dark:bg-gray-800 rounded-lg text-primary"
-                                >
-                                sign up
-                            </div> */}
+                                
+                            {error && <p className="py-2 text-red-600">{error}</p>}
+
                             <CustomButton
-                                //  isLoading={isLoading}
-                                //  onButtonClick={onSignUpClicked}
+                                 isLoading={isLoading}
+                                 onButtonClick={()=>handleSignUp()}
                                 >
                                 Sign up
                             </CustomButton> 
