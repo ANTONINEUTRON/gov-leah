@@ -37,7 +37,7 @@ export default function Register(){
             const user = userCredential.user;
             await updateProfile(user, {...user, displayName:name});
             
-            router.replace("/home")
+            router.replace("/policy")
             // You can redirect or perform other actions here after a successful sign-up
         } catch (err:any) {
             setError(err.message);

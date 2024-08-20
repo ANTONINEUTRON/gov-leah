@@ -1,6 +1,6 @@
 "use client";
 
-import FeedbackButton from "@/components/FeedbackButton";
+import AddFeedbackButton from "@/components/AddFeedbackButton";
 import FeedbackItem from "@/components/FeedbackItem";
 import FeedbackIten from "@/components/FeedbackItem";
 import Navbar from "@/components/nav_components/Navbar";
@@ -25,7 +25,7 @@ const FeedbackPage = ()=>{
             // Building the query
             const feedbackQuery = query(
                 feedbackRef,
-                where('by', '==', cAuth.currentUser?.uid)
+                where('userId', '==', cAuth.currentUser?.uid)
             );
 
             // Executing the query
@@ -50,22 +50,21 @@ const FeedbackPage = ()=>{
             <div className="">
                 <Navbar />
             </div>
-            <div>
-                <div className="p-10">
+            <div className="w-full">
+                <div className="p-10 w-full">
+                    <div className="flex justify-between">
+                        <div className="font-semibold text-2xl">
+                            Feedbacks
+                        </div>
+                        <AddFeedbackButton
+                            refreshFeedback={fetchFeedback} />
+                    </div>
+
                     {
                         feedbacks !== null ?
                             feedbacks!.length > 0
                                 ?
                                 (
-                                    <div>
-                                        <div className="flex justify-between">
-                                            <div className="font-semibold text-2xl">
-                                                Feedbacks
-                                            </div>
-                                            <FeedbackButton
-                                                refreshFeedback={fetchFeedback} />
-                                        </div>
-
                                         <div className="grid grid-cols-3">
                                             {
                                                 feedbacks.map((feedback)=>(
@@ -76,9 +75,8 @@ const FeedbackPage = ()=>{
                                                 ))
                                             }
                                         </div>
-                                    </div>
                                 ):(
-                                    <div className="w-screen h-screen flex justify-center items-center">
+                                    <div className="w-full h-screen flex justify-center items-center">
                                         <div>
                                             No feedbacks yet
                                         </div>

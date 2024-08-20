@@ -29,7 +29,7 @@ export default function Login(){
             const user = userCredential.user;
             
             // Redirect or perform other actions after successful sign-in
-            router.replace("/home");
+            router.replace("/policy");
         } catch (err: any) {
             setError(err.message);
             console.error('Error signing in:', err);

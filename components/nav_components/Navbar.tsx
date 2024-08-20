@@ -16,7 +16,7 @@ const Navbar: React.FC<NavbarProps> = ({className})=>{
     const [isOpen, setIsOpen] = useState(false)
     
     return (
-        <div className={className || ''}>
+        <div className={className || 'sticky'}>
             <Menu className={`w-10 h-12 lg:hidden ${isOpen ? 'hidden' : 'block'}`} onClick={()=>{setIsOpen(!isOpen)}}/>
             <nav className="hidden lg:flex h-screen flex-col bg-gray-100 shadow-md pr-4 py-2">
                 <div className="flex justify-between">
@@ -67,8 +67,8 @@ const NavbarContents = ()=>{
                 <NavItem 
                     icon={<Home />}
                     title="Policies"
-                    path="/home"
-                    highlightCondition={(cPath.includes("home") || cPath == "/")}/>
+                    path="/policy"
+                    highlightCondition={(cPath.includes("policy") || cPath == "/")}/>
                 <div className="mt-2">
                     <ProfileItem />
                 </div>

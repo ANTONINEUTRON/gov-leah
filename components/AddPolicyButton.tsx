@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button, Modal, Input, Form } from 'antd';
-import { addDoc, collection, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, Timestamp, updateDoc } from 'firebase/firestore';
 import { cFirestore } from '@/firebaseconfig';
 import { Policy } from '@/models/policy';
 
@@ -30,7 +30,7 @@ const AddPolicyButton = ({ fetchPolicies }: { fetchPolicies : ()=>void}) => {
         const policiesRef = collection(cFirestore, 'policies');
 
         const newPolicy: Policy = {
-            id: policiesRef.id, // You may generate this ID if needed
+            id: '', // You may generate this ID if needed
             title: title,
             description: description,
             createdAt: Timestamp.now(),
@@ -41,6 +41,8 @@ const AddPolicyButton = ({ fetchPolicies }: { fetchPolicies : ()=>void}) => {
         try {
             // Adding the policy document to Firestore
             const docRef = await addDoc(policiesRef, newPolicy);
+
+            await updateDoc(docRef, { id: docRef.id });
 
             console.log('Policy saved with ID: ', docRef.id);
             fetchPolicies();
@@ -71,14 +73,19 @@ const AddPolicyButton = ({ fetchPolicies }: { fetchPolicies : ()=>void}) => {
                         label="Policy Title"
                         name="title"
                         rules={[{ required: true, message: 'Please enter the policy title' }]}>
-                        <Input placeholder="Enter policy title" />
+                        <Input 
+                            placeholder="Enter policy title" 
+                            onChange={(e)=>setTitle(e.target.value)} />
                     </Form.Item>
                     <Form.Item
                         label="Policy Description"
                         name="description"
                         rules={[{ required: true, message: 'Please enter the policy description' }]}
                     >
-                        <Input.TextArea rows={4} placeholder="Enter policy description" />
+                        <Input.TextArea 
+                            rows={4} 
+                            placeholder="Enter policy description" 
+                            onChange={(e) => setDescription(e.target.value)} />
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">

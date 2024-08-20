@@ -7,7 +7,7 @@ import { cAuth, cFirestore } from '@/firebaseconfig';
 import { Feedback } from '@/models/feedback';
 import { updateCurrentUser } from 'firebase/auth';
 
-const FeedbackButton = ({ refreshFeedback }: { refreshFeedback : ()=>void}) => {
+const AddFeedbackButton = ({ refreshFeedback }: { refreshFeedback : ()=>void}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const showModal = () => {
@@ -38,7 +38,7 @@ const FeedbackButton = ({ refreshFeedback }: { refreshFeedback : ()=>void}) => {
     );
 };
 
-export default FeedbackButton;
+export default AddFeedbackButton;
 
 
 const FeedbackForm = ({ refreshFeedback, setIsModalVisible }: { refreshFeedback: () => void, setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>})=>{
@@ -63,9 +63,9 @@ const FeedbackForm = ({ refreshFeedback, setIsModalVisible }: { refreshFeedback:
                 title: title,
                 feedback: feedback,
                 createdAt: Timestamp.now(),
-                by: user?.uid ?? "",
-                response: "",
-                responder: ""
+                by: user?.displayName ?? "Anon",
+                userId: user!.uid,
+                responses: [],
             };
             // Adding feedback to the collection with a timestamp
             let docref = await addDoc(feedbackRef, feedbackObj);
@@ -90,17 +90,14 @@ const FeedbackForm = ({ refreshFeedback, setIsModalVisible }: { refreshFeedback:
             <Form.Item
                 label="Your Title"
                 name="title"
-                
-                rules={[{ required: true, message: 'Please enter your feedback title' }]}
-            >
-                <Input onChange={(e)=>setTitle(e.target.value)} placeholder="Write your feedback title here..." />
+                rules={[{ required: true, message: 'Please enter your feedback title' }]}>
+                <Input onChange={(e)=>setTitle(e.target.value)} value={title} placeholder="Write your feedback title here..." />
             </Form.Item>
             <Form.Item
                 label="Your Feedback"
                 name="feedback"
-                rules={[{ required: true, message: 'Please enter your feedback' }]}
-            >
-                <Input.TextArea onChange={(e) => setFeedback(e.target.value)} rows={4} placeholder="Write your feedback here..." />
+                rules={[{ required: true, message: 'Please enter your feedback' }]}>
+                <Input.TextArea onChange={(e) => setFeedback(e.target.value)} value={feedback} rows={4} placeholder="Write your feedback here..." />
             </Form.Item>
 
             {error && <p className="py-2 text-red-600">{error}</p>}

@@ -41,7 +41,7 @@ const HomePage = ()=>{
             <div>
                 <Navbar />
             </div>
-            <div className="p-10">
+            <div className="p-10 w-full">
                 <div className="flex justify-between">
                     <div className="font-semibold text-2xl">
                         Latest Government Policies
@@ -50,16 +50,32 @@ const HomePage = ()=>{
                         fetchPolicies={fetchPolicies}/>
                 </div>
                 
-                <div className="grid grid-cols-3">
-                    <PolicyItem />
-                    <PolicyItem />
-                    <PolicyItem />
-                    <PolicyItem />
-                    <PolicyItem />
-                    <PolicyItem />
-                    <PolicyItem />
-                    <PolicyItem />
-                    <PolicyItem />
+                <div>
+                    {
+                        policies 
+                        ? 
+                            
+                            policies.length > 0 ? policies.map((policy)=>(
+                                    <div>
+                                        <div className="grid grid-cols-3">
+                                            <PolicyItem
+                                                key={policy.id}
+                                                policy={policy} />
+                                        </div>
+                                    </div>
+                            ))
+                            
+                            :(
+                                <div className="w-full h-[80vh] flex justify-center items-center">
+                                    No policy yet
+                                </div>
+                            )
+                        : (
+                            <div>
+                                Loading...
+                            </div>
+                        )
+                    }
                 </div>
             </div>
         </div>
@@ -68,14 +84,18 @@ const HomePage = ()=>{
 
 export default HomePage
 
-function PolicyItem() {
+function PolicyItem({ policy }: { policy: Policy }) {
+
+
     return (
-        <Link href='home/23asid'>
+        <Link href={'policy/'+policy.id}>
             <div className="bg-white shadow-xl m-4 rounded-lg p-3">
-                <div className="px-6 py-4">
-                    <h2 className="text-xl font-bold text-gray-800 mb-2">Policy Title</h2>
-                    <p className="text-gray-700 text-base">
-                        A brief description of the policy goes here. This is a summary that gives users an idea of what the policy is about.
+                <div className="px-3 py-3">
+                    <h2 className="text-xl font-bold text-gray-800 mb-2">
+                        {policy.title}
+                    </h2>
+                    <p className="text-gray-700 text-base line-clamp-4">
+                        {policy.description}
                     </p>
                 </div>
                 <div className="px-6 flex justify-end items-center">
