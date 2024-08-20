@@ -1,12 +1,43 @@
+"use client"
+
 import AddPolicyButton from "@/components/AddPolicyButton";
 import Navbar from "@/components/nav_components/Navbar";
+import { cFirestore } from "@/firebaseconfig";
+import { Policy } from "@/models/policy";
+import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const HomePage = ()=>{
+    const [policies, setPolicies] = useState<Policy[] | null>(null);
+
+    useEffect(()=>{
+        fetchPolicies();
+    },[]);
+
+    async function fetchPolicies(){
+        try {
+            // Reference to the 'policies' collection
+            const policiesRef = collection(cFirestore, 'policies');
+
+            // Fetch all documents in the 'policies' collection
+            const querySnapshot = await getDocs(policiesRef);
+
+            // Map over the documents and convert them to Policy objects
+            const fPolicies: Policy[] = querySnapshot.docs.map(doc => ({
+                ...doc.data() as Policy,
+            }));
+
+            console.log(fPolicies.length);
+
+            setPolicies(fPolicies);
+        } catch (error) {
+            console.error('Error fetching policies: ', error);
+        }
+    }
+
     return (
         <div className="flex">
-            
-            
             <div>
                 <Navbar />
             </div>
@@ -15,7 +46,8 @@ const HomePage = ()=>{
                     <div className="font-semibold text-2xl">
                         Latest Government Policies
                     </div>
-                    <AddPolicyButton />
+                    <AddPolicyButton 
+                        fetchPolicies={fetchPolicies}/>
                 </div>
                 
                 <div className="grid grid-cols-3">

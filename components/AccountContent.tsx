@@ -12,10 +12,7 @@ const AccountContent = () => {
 
     useEffect(() => {
         let currentUser = cAuth.currentUser;
-        console.log("heele");
-
-        console.log(currentUser);
-
+        
         setUser(currentUser);
     }, [])
     

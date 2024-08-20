@@ -60,37 +60,18 @@ const NavbarContents = ()=>{
         <>
             <ul className="font-medium flex flex-col space-y-2">
                 <NavItem 
-                    icon={<Home />}
-                    title="Policies"
-                    path="/home"
-                    highlightCondition={(cPath.includes("home") || cPath == "/")}/>
-                <NavItem 
                     title="Feedbacks"
                     icon={<Briefcase />}
                     path="/feedbacks"
                     highlightCondition={cPath.includes("feedbacks")}/>
-                {/* <NavItem 
-                    title="Chats"
-                    icon={<MessageSquare />}
-                    path="/chat"
-                    highlightCondition={cPath.includes("chat")}/>
                 <NavItem 
-                    path="/schedules"
-                    icon={<Calendar/>}
-                    title="Schedules"
-                    highlightCondition={cPath.includes("schedules")}/>
-                <NavItem 
-                    title="Notifications"
-                    icon={<Bell />}
-                    path="/notifications"
-                    highlightCondition={cPath.includes("notifications")}/> */}
-                
-                <ProfileItem />
-                {/* <NavItem 
-                    title=""
-                    icon
-                    path=""
-                    highlightCondition/> */}
+                    icon={<Home />}
+                    title="Policies"
+                    path="/home"
+                    highlightCondition={(cPath.includes("home") || cPath == "/")}/>
+                <div className="mt-2">
+                    <ProfileItem />
+                </div>
             </ul>
         </>
     )

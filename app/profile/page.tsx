@@ -21,9 +21,6 @@ export default function Profile(){
 
     useEffect(()=>{
         let currentUser = cAuth.currentUser;
-        console.log("heele");
-        
-        console.log(currentUser);
         
         setUser(currentUser);
     },[])

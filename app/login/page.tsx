@@ -27,7 +27,7 @@ export default function Login(){
         try {
             const userCredential = await signInWithEmailAndPassword(cAuth, email, password);
             const user = userCredential.user;
-            console.log('User signed in:', user);
+            
             // Redirect or perform other actions after successful sign-in
             router.replace("/home");
         } catch (err: any) {

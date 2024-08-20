@@ -16,7 +16,6 @@ const IsAuthenticated: React.FC<IsAuthenticatedProps> = ({children})=>{
 
     useEffect(()=>{
         cAuth.authStateReady().then(()=>{
-            console.log(cAuth.currentUser);
             (cAuth.currentUser);
             if (isUA){
                 setIsInitializationComplete(true)

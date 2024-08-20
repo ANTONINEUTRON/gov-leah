@@ -36,7 +36,7 @@ export default function Register(){
             const userCredential = await createUserWithEmailAndPassword(cAuth, email, password);
             const user = userCredential.user;
             await updateProfile(user, {...user, displayName:name});
-            console.log('User created:', user);
+            
             router.replace("/home")
             // You can redirect or perform other actions here after a successful sign-up
         } catch (err:any) {
