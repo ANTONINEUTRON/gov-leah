@@ -21,6 +21,7 @@ export default function OpenFeedbackPage({ params }: {
         try {
             // Reference to the 'policies' collection
             // const policiesRef = collection(cFirestore, '');
+            console.log(cAuth.currentUser );
 
             const docRef = doc(cFirestore, "feedback/" + feedback!.id)
             let commentToSave: Comment = {

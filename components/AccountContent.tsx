@@ -1,14 +1,15 @@
 import { Edit3, LogOut } from "react-feather"
-import { CustomButton } from "./CustomButton"
-import { useRouter } from "next/router";
+import { CustomButton } from "./CustomButton";
 import { cAuth } from "@/firebaseconfig";
 import UserPFP from "./UserPFP";
 import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 
 const AccountContent = () => {
     const [user, setUser] = useState<User | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         let currentUser = cAuth.currentUser;
@@ -18,7 +19,8 @@ const AccountContent = () => {
     
     const logUserOut = ()=>{
         cAuth.signOut();
-        useRouter().replace("/");
+        
+        router.push("/");
     }
 
     return (

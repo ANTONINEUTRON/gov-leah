@@ -8,12 +8,15 @@ import { cAuth, cFirestore } from "@/firebaseconfig";
 import { Feedback } from "@/models/feedback";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const FeedbackPage = ()=>{
     const [feedbacks, setFeedbacks] = useState<Feedback[] | null>(null);
+    const isAdminRef = useRef(false);
 
     useEffect(()=>{
+        var user = cAuth.currentUser!;
+        isAdminRef.current = user.email == "admin@nasgovfeed.com";
         fetchFeedback();
     },[])
 
@@ -23,7 +26,9 @@ const FeedbackPage = ()=>{
             const feedbackRef = collection(cFirestore, 'feedback');
 
             // Building the query
-            const feedbackQuery = query(
+            const feedbackQuery = isAdminRef ? query(
+                feedbackRef
+            ) : query(
                 feedbackRef,
                 where('userId', '==', cAuth.currentUser?.uid)
             );
@@ -56,8 +61,8 @@ const FeedbackPage = ()=>{
                         <div className="font-semibold text-2xl">
                             Feedbacks
                         </div>
-                        <AddFeedbackButton
-                            refreshFeedback={fetchFeedback} />
+                        {/* <AddFeedbackButton
+                            refreshFeedback={fetchFeedback} /> */}
                     </div>
 
                     {
@@ -76,7 +81,7 @@ const FeedbackPage = ()=>{
                                             }
                                         </div>
                                 ):(
-                                    <div className="w-full h-screen flex justify-center items-center">
+                                    <div className="w-full h-[80vh] flex justify-center items-center">
                                         <div>
                                             No feedbacks yet
                                         </div>

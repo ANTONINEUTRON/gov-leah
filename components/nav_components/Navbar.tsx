@@ -1,9 +1,8 @@
 "use client"
-import { Bell, Briefcase, Calendar, ChevronDown, ChevronUp, Home, Menu, MessageSquare, User, X } from "react-feather"
+import { Briefcase, ChevronDown, ChevronUp, Home, Menu, User, X } from "react-feather"
 import Logo from "../logo"
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import NavItem from "./NavItem";
 import { Drawer, Popover } from "antd";
 import AccountContent from "../AccountContent";
@@ -69,7 +68,7 @@ const NavbarContents = ()=>{
                     title="Policies"
                     path="/policy"
                     highlightCondition={(cPath.includes("policy") || cPath == "/")}/>
-                <div className="mt-2">
+                <div className="mt-4">
                     <ProfileItem />
                 </div>
             </ul>

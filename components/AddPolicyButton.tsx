@@ -1,15 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Modal, Input, Form } from 'antd';
 import { addDoc, collection, Timestamp, updateDoc } from 'firebase/firestore';
-import { cFirestore } from '@/firebaseconfig';
+import { cAuth, cFirestore } from '@/firebaseconfig';
 import { Policy } from '@/models/policy';
 
 const AddPolicyButton = ({ fetchPolicies }: { fetchPolicies : ()=>void}) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const isAdminRef = useRef(false);
+
+    useEffect(() => {
+        var user = cAuth.currentUser;
+        isAdminRef.current = user?.email == "admin@nasgovfeed.com";
+    })
 
     const showModal = () => {
         setIsModalVisible(true);
