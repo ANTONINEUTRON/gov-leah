@@ -2,7 +2,7 @@
 
 import AddPolicyButton from "@/components/AddPolicyButton";
 import Navbar from "@/components/nav_components/Navbar";
-import { cFirestore } from "@/firebaseconfig";
+import { cAuth, cFirestore } from "@/firebaseconfig";
 import { Policy } from "@/models/policy";
 import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
@@ -10,9 +10,11 @@ import { useEffect, useState } from "react";
 
 const HomePage = ()=>{
     const [policies, setPolicies] = useState<Policy[] | null>(null);
+    const [isAdminSignedIn, setIsAdminSignedIn] = useState(false);
 
     useEffect(()=>{
         fetchPolicies();
+        isAdminSignedInn();
     },[]);
 
     async function fetchPolicies(){
@@ -36,6 +38,19 @@ const HomePage = ()=>{
         }
     }
 
+    async function isAdminSignedInn(){
+        try{
+            // 
+            let st = await cAuth.currentUser?.email?.toLowerCase() == "admin@nasgovfeed.com";
+
+            setIsAdminSignedIn(st);
+        }catch(error){
+console.log(error);
+
+        }
+
+    }
+
     return (
         <div className="flex">
             <div>
@@ -46,24 +61,34 @@ const HomePage = ()=>{
                     <div className="font-semibold text-2xl">
                         Latest Government Policies
                     </div>
-                    <AddPolicyButton 
-                        fetchPolicies={fetchPolicies}/>
+                    {
+                        isAdminSignedIn && <AddPolicyButton
+                            fetchPolicies={fetchPolicies} />
+                    }
                 </div>
                 
                 <div>
                     {
                         policies 
                         ? 
-                            
-                            policies.length > 0 ? policies.map((policy)=>(
+                            policies.length > 0 ? 
+                            (
                                     <div>
                                         <div className="grid grid-cols-3">
-                                            <PolicyItem
-                                                key={policy.id}
-                                                policy={policy} />
+                                            {
+                                            policies.length > 0 ? policies.map((policy) => (
+                                                <div>
+                                                    <PolicyItem
+                                                        key={policy.id}
+                                                        policy={policy} />
+                                                </div>
+                                            )):(<div></div>)
+                                            }
+                                            
+                                                
                                         </div>
                                     </div>
-                            ))
+                            )
                             
                             :(
                                 <div className="w-full h-[80vh] flex justify-center items-center">

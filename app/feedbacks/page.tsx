@@ -12,11 +12,17 @@ import { useEffect, useRef, useState } from "react";
 
 const FeedbackPage = ()=>{
     const [feedbacks, setFeedbacks] = useState<Feedback[] | null>(null);
-    const isAdminRef = useRef(false);
+    const [isAdminRef, setIsAdminRef] = useState(false);
 
     useEffect(()=>{
         var user = cAuth.currentUser!;
-        isAdminRef.current = user.email == "admin@nasgovfeed.com";
+        console.log(user.email);
+        
+        let st = user.email == "admin@nasgovfeed.com";
+console.log(st);
+
+        setIsAdminRef(st);
+
         fetchFeedback();
     },[])
 
@@ -61,8 +67,12 @@ const FeedbackPage = ()=>{
                         <div className="font-semibold text-2xl">
                             Feedbacks
                         </div>
-                        {/* <AddFeedbackButton
-                            refreshFeedback={fetchFeedback} /> */}
+                        {
+                            !isAdminRef && (
+                                <AddFeedbackButton
+                                    refreshFeedback={fetchFeedback} />
+                            )
+                        }
                     </div>
 
                     {
